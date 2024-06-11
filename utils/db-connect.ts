@@ -1,11 +1,10 @@
 import { MongoClient } from "mongodb";
 const DB_PASSWORD='IkStmMvfyXtsgXJP';
 //TODO
-const DB_URL='mongodb+srv:a0533190528:IkStmMvfyXtsgXJP@volunteercoordinationsy.h8gbwzo.mongodb.net/'
+// const DB_URL='mongodb+srv:a0533190528:IkStmMvfyXtsgXJP@volunteercoordinationsy.h8gbwzo.mongodb.net/'
 const DB_NAME='VolunteerCoordinationSystem';
 
-const a='MONGO_URI=mongodb+srv://BrachaFrenkel:5711890@cluster0.0q3cxvy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-
+const DB_URL = 'mongodb+srv://a0533190528:IkStmMvfyXtsgXJP@volunteercoordinationsy.h8gbwzo.mongodb.net/VolunteerCoordinationSystem?retryWrites=true&w=majority';
 
 
 export default class DBConnect{
