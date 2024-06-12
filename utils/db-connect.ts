@@ -3,10 +3,12 @@ const DB_PASSWORD='IkStmMvfyXtsgXJP';
 //TODO
 // const DB_URL='mongodb+srv:a0533190528:IkStmMvfyXtsgXJP@volunteercoordinationsy.h8gbwzo.mongodb.net/'
 const DB_NAME='VolunteerCoordinationSystem';
+//  'mongodb+srv://a0533190528:IkStmMvfyXtsgXJP@volunteercoordinationsy.h8gbwzo.mongodb.net/volunteerCoordinationSystem?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true';
 
-const DB_URL = 'mongodb+srv://a0533190528:IkStmMvfyXtsgXJP@volunteercoordinationsy.h8gbwzo.mongodb.net/VolunteerCoordinationSystem?retryWrites=true&w=majority';
+const DB_URL =`mongodb+srv://a0533190528:${DB_PASSWORD}@volunteercoordinationsy.h8gbwzo.mongodb.net/?retryWrites=true&w=majority&appName=volunteercoordinationsy`;
 
-
+// const DB_URL='mongodb+srv://a0533190528:IkStmMvfyXtsgXJP@volunteercoordinationsy.h8gbwzo.mongodb.net/?retryWrites=true&w=majority&appName=VolunteerCoordinationSystem';
+// const DB_URL = 'mongodb+srv://a0533190528:IkStmMvfyXtsgXJP@volunteercoordinationsy.h8gbwzo.mongodb.net/VolunteerCoordinationSystem?retryWrites=true&w=majority';
 export default class DBConnect{
     private dbConn:MongoClient;
     constructor(){
@@ -24,5 +26,4 @@ public async terminate(){
     await this.dbConn.close();
     console.log("DB is closed");
 }
-
 }
