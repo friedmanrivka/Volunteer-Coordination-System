@@ -6,13 +6,20 @@ export interface Volunteer {
 }
 
 export interface HelpRequest {
-    _id?: string; // ID של הבקשה, אופציונלי כי הוא נוצר אוטומטית ב-MongoDB
+    _id?: string; 
     title: string;
     description: string;
     location: string;
-    status: HelpRequestStatus; // "open", "in progress", "closed"
-    priority: HelpRequestPriority; // "low", "medium", "high"
-    volunteerId?: string; // ID של המתנדב אם הוקצה
+    status: HelpRequestStatus; 
+    priority: HelpRequestPriority; 
+    volunteerId?: string; 
+    contactInfo?: {
+        phone?: string;
+        email?: string;
+    };
+    createdAt?: Date;
+    updatedAt?: Date;
+
 
 
 }

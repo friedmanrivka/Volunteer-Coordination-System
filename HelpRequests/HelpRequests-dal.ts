@@ -3,7 +3,7 @@ import DBConnect from "../utils/db-connect";
 import { HelpRequest } from "../utils/type";
 
 
-const HELPREQUESTS_COLLECTION_NAME = 'help-requests';
+const HELPREQUESTS_COLLECTION_NAME = 'Help Requests';
 export default class HelpRequestsDal {
     private collection: Collection<HelpRequest>;
     constructor(dbConn: DBConnect) {
