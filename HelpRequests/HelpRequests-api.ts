@@ -1,14 +1,14 @@
 
-import { Router,Request,Response } from 'express';
+import { Router, Request, Response } from 'express';
 import HelpRequestsService from './HelpRequests-service';
- import {extractLocation,extractStatus,extractPriority}from './middlewares'
+import { extractLocation, extractStatus, extractPriority } from './middlewares'
 
 
-export default class HelpRequestApi{
+export default class HelpRequestApi {
     public router: Router;
-    constructor(private helpRequsetsService: HelpRequestsService){
+    constructor(private helpRequsetsService: HelpRequestsService) {
         this.router = Router();
-       this.setRoutes();
+        this.setRoutes();
     }
     private setRoutes() {
         this.router.get('/', extractLocation, extractStatus, extractPriority, async (req: Request, res: Response) => {
@@ -25,5 +25,20 @@ export default class HelpRequestApi{
                 res.status(500).send(err.message);
             }
         });
+        this.router.get('/:id', async (req: Request, res: Response) => {
+            try {
+                const { id } = req.params;
+                const helpRequest = await this.helpRequsetsService.getHelpRequestById(id);
+                if (!helpRequest) {
+                    return res.status(404).send('The requested help request could not be found.');
+                }
+
+                res.status(200).json(helpRequest);
+            } catch (err: any) {
+                res.status(500).send(err.message);
+            }
+        });
+
+
     }
 }

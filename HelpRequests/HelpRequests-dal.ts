@@ -1,4 +1,4 @@
-import { Collection } from "mongodb";
+import { Collection,ObjectId} from "mongodb";
 import DBConnect from "../utils/db-connect";
 import { HelpRequest } from "../utils/type";
 
@@ -19,4 +19,21 @@ export default class HelpRequestsDal {
         }
 
     }
+    // public async getHelpRequestById(id: string): Promise<HelpRequest | null> {
+    //     try {
+    //         const objectId = new ObjectId(id);
+    //         return await this.collection.findOne({ _id: objectId });
+    //     } catch (err: any) {
+    //         throw new Error(`Failed to get help request from DB: ${err}`);
+    //    }
+    public async getHelpRequestById(id: string): Promise<HelpRequest | null> {
+        try {
+            // Using string ID directly in the query
+            const helpRequest = await this.collection.findOne({ _id: id });
+            return helpRequest;
+        } catch (err: any) {
+            throw new Error(`Failed to get help request from DB: ${err}`);
+        }
+    }
+   
 }

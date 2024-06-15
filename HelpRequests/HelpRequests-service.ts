@@ -9,4 +9,10 @@ export default class HelpRequestsService{
     public async getHelpRequests(filter:any):Promise<HelpRequest[]>{
         return this.helpRequestsDal.getHelpRequests(filter);
     }
+    // public async getHelpRequestById(id: string): Promise<HelpRequest | null> {
+    //     return this.helpRequestsDal.getHelpRequestById(id);
+    // }
+    public async getHelpRequestById(id: string): Promise<HelpRequest | null> {
+        return this.helpRequestsDal.getHelpRequestById(id);
+    }
 }
