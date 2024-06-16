@@ -8,6 +8,7 @@ import VolunteersService from './volunteers/volunteers-service'
 import VolunteersDal from './volunteers/volunteers-dal'
 const PORT = 8080;
 const HELP_REQUESTS_API_ROUTE = '/api/requests';
+const VOLUNTEERS_ROUTE='/api/volunteers'
 
 export default class App {
     private dbConn?: DBConnect;
@@ -21,20 +22,20 @@ export default class App {
 
         const helpRequestsDal = new HelpRequestsDal(this.dbConn);
         const helpRequestsService = new HelpRequestsService(helpRequestsDal);
-     
-        const helpRequestsApi=new HelpRequestApi(helpRequestsService);
+       const helpRequestsApi=new HelpRequestApi(helpRequestsService);
         const volunteersDal = new VolunteersDal(this.dbConn);
         const volunteersService = new VolunteersService(volunteersDal);
         const volunteersApi = new VolunteersApi(volunteersService);
 
         this.app = express();
-        this.app.use('/api/volunteers', volunteersApi.router);
-
+        this.app.use(express.json());
         this.app.use(HELP_REQUESTS_API_ROUTE, helpRequestsApi.router);
+        this.app.use(VOLUNTEERS_ROUTE, volunteersApi.router);
         this.app.listen(PORT, () => {
             console.log("Server is up");
         });
     }
+
 
     // should be called on SIGINT
     public async terminate() {
