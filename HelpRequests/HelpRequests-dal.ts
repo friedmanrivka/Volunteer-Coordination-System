@@ -38,18 +38,19 @@ export default class HelpRequestsDal {
             throw new Error(`Failed to add help request to DB: ${err}`);
         }
     }
-    public async assignVolunteer(id: string, volunteerId: string): Promise<HelpRequest | null> {
+    public async assignVolunteer(_id: string, volunteerId: string): Promise<HelpRequest | null> {
         console.log('dal: assignVolunteer');
         try {
-            console.log(`Updating help request with id: ${id} to assign volunteer: ${volunteerId}`);
+            console.log(`Updating help request with _id: ${_id} to assign volunteer: ${volunteerId}`);
+            
             const result = await this.collection.findOneAndUpdate(
-                { _id: id },
+                { _id: _id },
                 { $set: { status: 'in progress', volunteerId: volunteerId, updatedAt: new Date() } },
                 { returnDocument: 'after' } as any // Explicitly typing the options object
             );
-
+    
             if (!result.value) {
-                console.error(`No help request found with id: ${id}`);
+                console.error(`No help request found with _id: ${_id}`);
                 throw new Error('Failed to update help request');
             }
             console.log('Help request updated successfully:', result.value);
@@ -59,7 +60,6 @@ export default class HelpRequestsDal {
             throw new Error(`Failed to assign volunteer: ${err}`);
         }
     }
- 
     
        
    

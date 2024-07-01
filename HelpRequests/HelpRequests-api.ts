@@ -39,13 +39,15 @@ export default class HelpRequestApi {
         });
         this.router.post('/helprequests', async (req: Request, res: Response) => {
             console.log('api');
-            const { title, description, location, priority,contactInfo } = req.body;
+            const { _id,title, description, location, priority,volunteerId,contactInfo } = req.body;
          const helpRequest: HelpRequest= {
+            _id,
                 title,
                 description,
                 location,
                 status: 'open', 
                 priority,
+                volunteerId,
                 contactInfo,
                 createdAt: new Date(),
                 updatedAt: new Date()
@@ -60,46 +62,29 @@ export default class HelpRequestApi {
                 res.status(500).send(`Failed to create help request: ${err.message}`);
             }
         });
-        // this.router.post('/helprequests/:id/volunteer', async (req: Request, res: Response) => {
-        //     const id = req.params.id;
-        //     const { volunteerId } = req.body;
-        //     if (!volunteerId) {
-        //         return res.status(400).send('Volunteer ID is required');
-        //     }
-        //     try {
-        //         const updatedHelpRequest=await this.helpRequsetsService.assignVolunteer(id,volunteerId);
-        //         // const updatedHelpRequest = await this.helpRequestsService.assignVolunteer(id, volunteerId);
-        //         if (!updatedHelpRequest) {
-        //             return res.status(404).send('The requested help request could not be found.');
-        //         }
-
-        //         res.status(200).json(updatedHelpRequest);
-        //     } catch (err: any) {
-        //         res.status(500).send(`Failed to assign volunteer: ${err.message}`);
-        //     }
-        // });
-        this.router.put('/helprequests/:id/volunteer', async (req: Request, res: Response) => {
-            const id = req.params.id;
+       
+ this.router.put('/helprequests/:id/volunteer', async (req: Request, res: Response) => {
+            const _id = req.params.id;
             const { volunteerId } = req.body;
-
+        
             if (!volunteerId) {
                 return res.status(400).send('Volunteer ID is required');
             }
-
+        
             try {
-                console.log(`Assigning volunteer ${volunteerId} to help request ${id}`);
-                const updatedHelpRequest=await this.helpRequsetsService.assignVolunteer(id,volunteerId);
-             if (!updatedHelpRequest) {
+                console.log(`Assigning volunteer ${volunteerId} to help request ${_id}`);
+                const updatedHelpRequest = await this.helpRequsetsService.assignVolunteer(_id, volunteerId);
+                if (!updatedHelpRequest) {
                     return res.status(404).send('The requested help request could not be found.');
                 }
-
+        
                 res.status(200).json(updatedHelpRequest);
             } catch (err: any) {
                 console.error('Failed to assign volunteer:', err.message);
                 res.status(500).send(`Failed to assign volunteer: ${err.message}`);
             }
         });
-
-
+        
+        
   
      } }
