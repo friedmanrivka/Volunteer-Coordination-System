@@ -18,8 +18,9 @@ export default class HelpRequestsService{
         console.log('service')
         return this.helpRequestsDal.addHelpRequest(helpRequest);
     }
-    public async assignVolunteer(id: string, volunteerId: string): Promise<HelpRequest | null> {
+    public async assignVolunteer(_id: string, volunteerId: string): Promise<HelpRequest | null> {
         console.log('service: assignVolunteer');
-        return this.helpRequestsDal.assignVolunteer(id, volunteerId);
+        return this.helpRequestsDal.assignVolunteer(_id, volunteerId);
     }
+    
 }
