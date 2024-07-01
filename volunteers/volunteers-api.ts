@@ -11,7 +11,9 @@ export default class volunteerApi{
     }
     private setRoutes() {
         this.router.post('/', async (req: Request, res: Response) => {
+
             console.log('api');
+
             try {
                 const { name, email, phone, _id } = req.body as Volunteer; // Destructure the request body
 

@@ -16,6 +16,7 @@
     "lodash": "^4.17.21",
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.1",
+    "node-models": "^2.1.5",
     "superagent": "^9.0.2",
     "undici-types": "^5.26.5",
     "uuid": "^10.0.0"
