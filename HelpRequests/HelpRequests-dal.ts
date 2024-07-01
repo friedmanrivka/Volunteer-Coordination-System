@@ -42,24 +42,34 @@ export default class HelpRequestsDal {
         console.log('dal: assignVolunteer');
         try {
             console.log(`Updating help request with _id: ${_id} to assign volunteer: ${volunteerId}`);
-            
-            const result = await this.collection.findOneAndUpdate(
-                { _id: _id },
-                { $set: { status: 'in progress', volunteerId: volunteerId, updatedAt: new Date() } },
-                { returnDocument: 'after' } as any // Explicitly typing the options object
-            );
-    
-            if (!result.value) {
+            const existingHelpRequest = await this.collection.findOne({ _id: _id });
+            if (!existingHelpRequest) {
                 console.error(`No help request found with _id: ${_id}`);
+                throw new Error('Failed to find help request');
+            }
+            console.log('Existing help request:', existingHelpRequest);
+            const result = await this.collection.updateOne(
+                { _id: _id },
+                { $set: { status: 'in progress', volunteerId: volunteerId, updatedAt: new Date() } }
+            );
+           if (result.matchedCount === 0) {
+                console.error(`No help request found with _id: ${_id} after update`);
                 throw new Error('Failed to update help request');
             }
-            console.log('Help request updated successfully:', result.value);
-            return result.value;
+         const updatedHelpRequest = await this.collection.findOne({ _id: _id });
+            if (!updatedHelpRequest) {
+                console.error(`No help request found with _id: ${_id} after update`);
+                throw new Error('Failed to retrieve updated help request');
+            }
+    
+            console.log('Help request updated successfully:', updatedHelpRequest);
+            return updatedHelpRequest;
         } catch (err: any) {
             console.error('Error in assignVolunteer:', err);
             throw new Error(`Failed to assign volunteer: ${err}`);
         }
     }
+    
     
        
    
