@@ -70,26 +70,6 @@ export default class HelpRequestsDal {
         }
     }
     
-    
-       
+     
    
-       
-    // public async assignVolunteer(id: string, volunteerId: string): Promise<HelpRequest | null> {
-    //     console.log('dal: assignVolunteer');
-    //     try {
-    //         const result = await this.collection.findOneAndUpdate(
-    //             { _id: id },
-    //             { $set: { status: 'in progress', volunteerId: volunteerId, updatedAt: new Date() } },
-    //             { returnDocument: 'after' }
-    //         );
-
-    //         if (!result.value) {
-    //             throw new Error('Failed to update help request');
-    //         }
-
-    //         return result.value;
-    //     } catch (err: any) {
-    //         throw new Error(`Failed to assign volunteer: ${err}`);
-    //     }
-    // }
 }
