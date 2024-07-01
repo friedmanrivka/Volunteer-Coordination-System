@@ -49,3 +49,26 @@ export function extractPriority(req: Request, res: Response, next: NextFunction)
     }
     next();
 }
+
+// export function validateHelpRequest(req: Request, res: Response, next: NextFunction) {
+//     const { title, description, location, priority } = req.body;
+
+//     if (!title || typeof title !== 'string') {
+//         return res.status(400).send('Invalid or missing title');
+//     }
+
+//     if (!description || typeof description !== 'string') {
+//         return res.status(400).send('Invalid or missing description');
+//     }
+
+//     if (!location || typeof location !== 'string') {
+//         return res.status(400).send('Invalid or missing location');
+//     }
+
+//     const validPriorities = ['low', 'medium', 'high'];
+//     if (!priority || !validPriorities.includes(priority)) {
+//         return res.status(400).send('Invalid or missing priority');
+//     }
+
+//     next();
+// }

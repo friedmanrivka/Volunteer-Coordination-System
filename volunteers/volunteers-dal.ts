@@ -11,6 +11,9 @@ export default class VolunteersDal {
     }
 
     public async createVolunteer(data: Volunteer): Promise<Volunteer> {
+
+        console.log('dal')
+
         try {
             const result = await this.collection.insertOne(data);
             if (!result.acknowledged) {

@@ -9,10 +9,17 @@ export default class HelpRequestsService{
     public async getHelpRequests(filter:any):Promise<HelpRequest[]>{
         return this.helpRequestsDal.getHelpRequests(filter);
     }
-    // public async getHelpRequestById(id: string): Promise<HelpRequest | null> {
-    //     return this.helpRequestsDal.getHelpRequestById(id);
-    // }
+    
     public async getHelpRequestById(id: string): Promise<HelpRequest | null> {
         return this.helpRequestsDal.getHelpRequestById(id);
+    }
+
+    public async addHelpRequest(helpRequest: HelpRequest): Promise<HelpRequest> {
+        console.log('service')
+        return this.helpRequestsDal.addHelpRequest(helpRequest);
+    }
+    public async assignVolunteer(id: string, volunteerId: string): Promise<HelpRequest | null> {
+        console.log('service: assignVolunteer');
+        return this.helpRequestsDal.assignVolunteer(id, volunteerId);
     }
 }
