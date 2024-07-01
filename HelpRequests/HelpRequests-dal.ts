@@ -69,6 +69,42 @@ export default class HelpRequestsDal {
             throw new Error(`Failed to assign volunteer: ${err}`);
         }
     }
+    public async closeRequest(_id: string): Promise<HelpRequest | null> {
+        console.log('dal: closeRequest');
+        try {
+            console.log(`Closing help request with _id: ${_id}`);
+           
+            const existingHelpRequest = await this.collection.findOne({ _id: _id });
+            if (!existingHelpRequest) {
+                console.error(`No help request found with _id: ${_id}`);
+                throw new Error('Failed to find help request');
+            }
+            console.log('Existing help request:', existingHelpRequest);
+            
+            const result = await this.collection.updateOne(
+                { _id: _id },
+                { $set: { status: 'closed', updatedAt: new Date() } }
+            );
+    
+            if (result.matchedCount === 0) {
+                console.error(`No help request found with _id: ${_id} after update`);
+                throw new Error('Failed to update help request');
+            }
+    
+           
+            const updatedHelpRequest = await this.collection.findOne({ _id: _id });
+            if (!updatedHelpRequest) {
+                console.error(`No help request found with _id: ${_id} after update`);
+                throw new Error('Failed to retrieve updated help request');
+            }
+    
+            console.log('Help request closed successfully:', updatedHelpRequest);
+            return updatedHelpRequest;
+        } catch (err: any) {
+            console.error('Error in closeRequest:', err);
+            throw new Error(`Failed to close help request: ${err}`);
+        }
+    }
     
      
    

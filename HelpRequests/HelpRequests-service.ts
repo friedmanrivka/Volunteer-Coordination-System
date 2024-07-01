@@ -22,5 +22,10 @@ export default class HelpRequestsService{
         console.log('service: assignVolunteer');
         return this.helpRequestsDal.assignVolunteer(_id, volunteerId);
     }
+    public async closeRequest(_id: string): Promise<HelpRequest | null> {
+        console.log('service: closeRequest');
+        return this.helpRequestsDal.closeRequest(_id);
+    }
+    
     
 }

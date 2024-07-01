@@ -85,6 +85,22 @@ export default class HelpRequestApi {
             }
         });
         
+        this.router.put('/helprequests/:id/close', async (req: Request, res: Response) => {
+            const _id = req.params.id;
+        
+            try {
+                console.log(`Closing help request ${_id}`);
+                const updatedHelpRequest = await this.helpRequsetsService.closeRequest(_id);
+                if (!updatedHelpRequest) {
+                    return res.status(404).send('The requested help request could not be found.');
+                }
+        
+                res.status(200).json(updatedHelpRequest);
+            } catch (err: any) {
+                console.error('Failed to close help request:', err.message);
+                res.status(500).send(`Failed to close help request: ${err.message}`);
+            }
+        });
         
   
      } }
