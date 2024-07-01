@@ -1,9 +1,8 @@
-
 import { Router, Request, Response } from 'express';
 import HelpRequestsService from './HelpRequests-service';
+// import { extractLocation, extractStatus, extractPriority,validateHelpRequest } from './middlewares'
 import { extractLocation, extractStatus, extractPriority } from './middlewares'
-
-
+import { HelpRequest } from '../utils/type';
 export default class HelpRequestApi {
     public router: Router;
     constructor(private helpRequsetsService: HelpRequestsService) {
@@ -38,7 +37,69 @@ export default class HelpRequestApi {
                 res.status(500).send(err.message);
             }
         });
+        this.router.post('/helprequests', async (req: Request, res: Response) => {
+            console.log('api');
+            const { title, description, location, priority,contactInfo } = req.body;
+         const helpRequest: HelpRequest= {
+                title,
+                description,
+                location,
+                status: 'open', 
+                priority,
+                contactInfo,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+        
+            try {
+                const newHelpRequest=await this.helpRequsetsService.addHelpRequest(helpRequest)
+             
+                // const newHelpRequest = await helpRequestsService.addHelpRequest(helpRequest);
+                res.status(201).json(newHelpRequest);
+            } catch (err: any) {
+                res.status(500).send(`Failed to create help request: ${err.message}`);
+            }
+        });
+        // this.router.post('/helprequests/:id/volunteer', async (req: Request, res: Response) => {
+        //     const id = req.params.id;
+        //     const { volunteerId } = req.body;
+        //     if (!volunteerId) {
+        //         return res.status(400).send('Volunteer ID is required');
+        //     }
+        //     try {
+        //         const updatedHelpRequest=await this.helpRequsetsService.assignVolunteer(id,volunteerId);
+        //         // const updatedHelpRequest = await this.helpRequestsService.assignVolunteer(id, volunteerId);
+        //         if (!updatedHelpRequest) {
+        //             return res.status(404).send('The requested help request could not be found.');
+        //         }
+
+        //         res.status(200).json(updatedHelpRequest);
+        //     } catch (err: any) {
+        //         res.status(500).send(`Failed to assign volunteer: ${err.message}`);
+        //     }
+        // });
+        this.router.put('/helprequests/:id/volunteer', async (req: Request, res: Response) => {
+            const id = req.params.id;
+            const { volunteerId } = req.body;
+
+            if (!volunteerId) {
+                return res.status(400).send('Volunteer ID is required');
+            }
+
+            try {
+                console.log(`Assigning volunteer ${volunteerId} to help request ${id}`);
+                const updatedHelpRequest=await this.helpRequsetsService.assignVolunteer(id,volunteerId);
+             if (!updatedHelpRequest) {
+                    return res.status(404).send('The requested help request could not be found.');
+                }
+
+                res.status(200).json(updatedHelpRequest);
+            } catch (err: any) {
+                console.error('Failed to assign volunteer:', err.message);
+                res.status(500).send(`Failed to assign volunteer: ${err.message}`);
+            }
+        });
 
 
-    }
-}
+  
+     } }
