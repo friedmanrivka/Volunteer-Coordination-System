@@ -50,6 +50,41 @@ export function extractPriority(req: Request, res: Response, next: NextFunction)
     next();
 }
 
+
+export function validateHelpRequest(req: Request, res: Response, next: NextFunction) {
+    const { _id, title, description, location, priority, volunteerId, contactInfo } = req.body;
+
+    if (!_id || typeof _id !== 'string') {
+        return res.status(400).json({ error: 'Invalid or missing _id' });
+    }
+
+    if (!title || typeof title !== 'string') {
+        return res.status(400).json({ error: 'Invalid or missing title' });
+    }
+
+    if (!description || typeof description !== 'string') {
+        return res.status(400).json({ error: 'Invalid or missing description' });
+    }
+
+    if (!location || typeof location !== 'string') {
+        return res.status(400).json({ error: 'Invalid or missing location' });
+    }
+
+    if (!priority || typeof priority !== 'string') {
+        return res.status(400).json({ error: 'Invalid or missing priority' });
+    }
+
+    // if (!volunteerId || typeof volunteerId !== 'string') {
+    //     return res.status(400).json({ error: 'Invalid or missing volunteerId' });
+    // }
+
+    if (!contactInfo || typeof contactInfo !== 'object') {
+        return res.status(400).json({ error: 'Invalid or missing contactInfo' });
+    }
+
+    next();
+}
+
 // export function validateHelpRequest(req: Request, res: Response, next: NextFunction) {
 //     const { title, description, location, priority } = req.body;
 
