@@ -21,6 +21,10 @@ export default class HelpRequestsService{
         console.log('service: getHelpRequestsByStatus');
         return this.helpRequestsDal.getHelpRequestsByStatus(status);
     }
+    public async getHelpRequestByLocation(location: string): Promise<HelpRequest | null> {
+        return this.helpRequestsDal.getHelpRequestByLocation(location);
+    }
+ 
         
     
     public async addHelpRequest(helpRequest: HelpRequest): Promise<HelpRequest> {
