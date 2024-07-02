@@ -1,6 +1,6 @@
 // import uuid from 'uuid';
 import HelpRequestsDal from "./HelpRequests-dal";
-import { HelpRequest } from "../utils/type";
+import { HelpRequest,HelpRequestPriority,HelpRequestStatus } from "../utils/type";
 export default class HelpRequestsService{
     constructor(private helpRequestsDal: HelpRequestsDal)
     {
@@ -13,7 +13,16 @@ export default class HelpRequestsService{
     public async getHelpRequestById(id: string): Promise<HelpRequest | null> {
         return this.helpRequestsDal.getHelpRequestById(id);
     }
-
+    public async getHelpRequestsByPriority(priority: HelpRequestPriority): Promise<HelpRequest[]> {
+        console.log('service: getHelpRequestsByPriority');
+        return this.helpRequestsDal.getHelpRequestsByPriority(priority);
+    }
+    public async getHelpRequestsByStatus(status: HelpRequestStatus): Promise<HelpRequest[]> {
+        console.log('service: getHelpRequestsByStatus');
+        return this.helpRequestsDal.getHelpRequestsByStatus(status);
+    }
+        
+    
     public async addHelpRequest(helpRequest: HelpRequest): Promise<HelpRequest> {
         console.log('service')
         return this.helpRequestsDal.addHelpRequest(helpRequest);
