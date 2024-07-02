@@ -1,6 +1,7 @@
 // import uuid from 'uuid';
 import HelpRequestsDal from "./HelpRequests-dal";
 import { HelpRequest,HelpRequestPriority,HelpRequestStatus } from "../utils/type";
+import {sendEmail} from '../utils/emailService';
 export default class HelpRequestsService{
     constructor(private helpRequestsDal: HelpRequestsDal)
     {
@@ -37,8 +38,20 @@ export default class HelpRequestsService{
     }
     public async closeRequest(_id: string): Promise<HelpRequest | null> {
         console.log('service: closeRequest');
-        return this.helpRequestsDal.closeRequest(_id);
+        const updatedHelpRequest = await this.helpRequestsDal.closeRequest(_id);
+
+        if (updatedHelpRequest) {
+            const volunteerEmail = updatedHelpRequest.contactInfo?.email;
+            if (volunteerEmail) {
+                const subject = `Help Request ${_id} Closed`;
+                const text = `The help request with ID ${_id} has been closed. Thank you for your assistance.`;
+                await sendEmail(volunteerEmail, subject, text);
+            } else {
+                console.warn(`No email found for volunteer assigned to help request ${_id}`);
+            }
+        }
+
+        return updatedHelpRequest;
     }
-    
     
 }
