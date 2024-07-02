@@ -36,6 +36,18 @@ export default class HelpRequestApi {
                 res.status(500).send(err.message);
             }
         });
+        this.router.get('/location/:location', async (req: Request, res: Response) => {
+            try {
+                const { location } = req.params;
+                const helpRequests = await this.helpRequsetsService.getHelpRequestByLocation(location);
+                if (!helpRequests) {
+                    return res.status(404).send('The requested help request could not be found.');
+                }
+                res.status(200).json(helpRequests);
+            } catch (err: any) {
+                res.status(500).send(err.message);
+            }
+        });
         this.router.get('/', async (req: Request, res: Response) => {
             const priority = req.query.priority as HelpRequestPriority;
         

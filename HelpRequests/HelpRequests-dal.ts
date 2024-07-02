@@ -45,6 +45,16 @@ export default class HelpRequestsDal {
             throw new Error(`Failed to get help requests by status from DB: ${err}`);
         }
     }
+    public async getHelpRequestByLocation(location: string): Promise<HelpRequest | null> {
+        try {
+          
+            const helpRequest = await this.collection.findOne({ location: location });
+            return helpRequest;
+        } catch (err: any) {
+            throw new Error('Failed to get help request from DB: ${err}');
+        }
+    }
+
     
     
    public async addHelpRequest(helpRequest: HelpRequest): Promise<HelpRequest> {
